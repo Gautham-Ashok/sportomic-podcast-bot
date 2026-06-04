@@ -2,11 +2,9 @@ import streamlit as st
 import faiss
 import pickle
 import numpy as np
-import os
 import re
 
 from openai import OpenAI
-from dotenv import load_dotenv
 
 # ======================================
 # PAGE CONFIG
@@ -37,7 +35,10 @@ def seconds_to_hms(seconds):
 # LOAD ENV
 # ======================================
 
-load_dotenv()
+
+if "OPENAI_API_KEY" not in st.secrets:
+    st.error("OPENAI_API_KEY not found in Streamlit secrets.")
+    st.stop()
 
 client = OpenAI(
     api_key=st.secrets["OPENAI_API_KEY"]
